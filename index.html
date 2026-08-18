@@ -1,0 +1,297 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de precio · TikTok Shop MX</title>
+<meta name="description" content="Calcula el precio flash y el precio lista que necesitas en TikTok Shop México para recibir la liquidación que quieres, después de la tarifa SFP, la tarifa por artículo y las retenciones de ISR e IVA.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F6F4EF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Calculadora de precio · TikTok Shop MX">
+<meta property="og:description" content="Escribe cuánto quieres que te liquiden y obtén el precio flash, el precio lista y el ROI.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F6F4EF'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-size='22' text-anchor='middle' fill='%238A3324'%3E%24%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#F6F4EF;
+  --ink:#191817;
+  --soft:#6E6961;
+  --rule:#CFC9BC;
+  --hair:#E3DED4;
+  --rust:#8A3324;
+  --moss:#3F5D3A;
+  --tint:#EDEAE2;
+  --serif:"Newsreader",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:16px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  padding:40px 28px 70px;
+}
+.sheet{max-width:780px;margin:0 auto}
+
+.kicker{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--soft);margin-bottom:10px;
+}
+h1{
+  font-size:clamp(30px,5vw,44px);font-weight:400;letter-spacing:-.015em;
+  margin:0;line-height:1.03;border-bottom:2px solid var(--ink);padding-bottom:14px;
+}
+h1 i{font-style:italic}
+
+/* ---------- entrada ---------- */
+.ask{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:26px 0 22px;border-bottom:1px solid var(--rule);
+}
+.ask label{font-size:19px}
+.big-in{position:relative;display:flex;align-items:baseline}
+.big-in span{font-family:var(--mono);font-size:26px;color:var(--soft);margin-right:2px}
+#objetivo{
+  width:190px;border:0;background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:38px;font-weight:700;letter-spacing:-.02em;
+  padding:0 0 3px;border-bottom:2px solid var(--ink);
+}
+#objetivo:focus{outline:none;border-bottom-color:var(--rust)}
+.ask .unit{font-family:var(--mono);font-size:12px;color:var(--soft);letter-spacing:.1em}
+
+.side{
+  display:flex;gap:26px;flex-wrap:wrap;padding:14px 0 22px;
+  border-bottom:1px solid var(--rule);
+}
+.side div{display:flex;align-items:baseline;gap:8px}
+.side label{font-size:15px;color:var(--soft)}
+.side input{
+  width:96px;border:0;background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:17px;font-weight:500;padding:1px 0;
+  border-bottom:1px dotted var(--rule);text-align:right;
+}
+.side input:focus{outline:none;border-bottom:1px solid var(--rust)}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+/* ---------- resultado ---------- */
+.answer{display:flex;gap:0;margin:30px 0 0;border:1px solid var(--rule)}
+.answer div{flex:1;padding:18px 20px 16px;border-right:1px solid var(--hair)}
+.answer div:last-child{border-right:0}
+.answer div.lead{background:var(--tint)}
+.answer .k{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin-bottom:6px;
+}
+.answer .v{font-family:var(--mono);font-size:clamp(24px,4.4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1}
+.answer .s{font-family:var(--mono);font-size:11px;color:var(--soft);margin-top:6px}
+@media(max-width:560px){.answer{flex-direction:column}.answer div{border-right:0;border-bottom:1px solid var(--hair)}}
+
+/* ---------- desglose ---------- */
+h2{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);font-weight:500;margin:38px 0 12px;
+}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px}
+td{padding:8px 0;border-bottom:1px solid var(--hair);text-align:right}
+td:first-child{text-align:left;font-family:var(--serif);font-size:15.5px}
+tr.ind td:first-child{padding-left:20px;color:var(--soft);font-size:14.5px}
+tr.tot td{border-bottom:0;border-top:2px solid var(--ink);padding-top:12px;font-weight:700;font-size:15px}
+.neg{color:var(--rust)}
+.pos{color:var(--moss)}
+.dim{color:var(--soft)}
+.pct{color:var(--soft);font-size:11px;margin-left:9px}
+
+.note{border-left:2px solid var(--rust);padding:2px 0 2px 14px;margin-top:22px;font-size:14.5px;color:var(--soft)}
+.note b{color:var(--ink);font-weight:500}
+
+/* ---------- parámetros ---------- */
+details{margin-top:40px;border-top:1px solid var(--rule)}
+summary{
+  cursor:pointer;padding:14px 0 12px;list-style:none;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;font-size:13px}
+details[open] summary::after{content:"–"}
+.params{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border-top:1px solid var(--hair)}
+.p{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:10px 12px 9px}
+.p:last-child{border-right:0}
+.p label{
+  display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--soft);margin-bottom:4px;
+}
+.p input{
+  width:100%;border:0;background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:15px;font-weight:500;padding:0;
+  border-bottom:1px solid transparent;
+}
+.p input:focus{outline:none;border-bottom-color:var(--rust)}
+
+footer{
+  margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);
+  font-size:14px;color:var(--soft);
+}
+footer code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+</style>
+
+<div class="sheet">
+
+  <p class="kicker">Tienda Dopamina · TikTok Shop México</p>
+  <h1>Cuánto cobrar para <i>recibir</i> lo que quiero</h1>
+
+  <div class="ask">
+    <label for="objetivo">Quiero que me liquiden</label>
+    <span class="big-in"><span>$</span><input id="objetivo" type="number" min="0" step="1" value="120"></span>
+    <span class="unit">MXN</span>
+  </div>
+
+  <div class="side">
+    <div><label for="costo">Mi costo</label><input id="costo" type="number" min="0" step="1" placeholder="—"></div>
+    <div><label for="desc">Descuento flash</label><input id="desc" type="number" min="0" max="90" step="1" value="23"></div>
+    <div><label for="comm">Comisión</label><input id="comm" type="number" min="0" step="0.5" value="0"></div>
+  </div>
+
+  <div class="answer">
+    <div class="lead">
+      <div class="k">Precio flash</div>
+      <div class="v" id="vFlash">—</div>
+      <div class="s" id="sFlash"></div>
+    </div>
+    <div>
+      <div class="k">Precio lista</div>
+      <div class="v" id="vLista">—</div>
+      <div class="s" id="sLista"></div>
+    </div>
+    <div>
+      <div class="k">ROI</div>
+      <div class="v" id="vRoi">—</div>
+      <div class="s" id="sRoi"></div>
+    </div>
+  </div>
+
+  <h2>Desglose de la liquidación</h2>
+  <table id="tabla"></table>
+
+  <div class="note" id="nota"></div>
+
+  <details>
+    <summary>Parámetros de la plataforma</summary>
+    <div class="params">
+      <div class="p"><label for="pSfp">Tarifa SFP %</label><input id="pSfp" type="number" step="0.1" value="8"></div>
+      <div class="p"><label for="pCap">Tope SFP $</label><input id="pCap" type="number" step="1" value="40"></div>
+      <div class="p"><label for="pItem">Por artículo $</label><input id="pItem" type="number" step="0.5" value="6"></div>
+      <div class="p"><label for="pIsr">Ret. ISR %</label><input id="pIsr" type="number" step="0.1" value="2.5"></div>
+      <div class="p"><label for="pIvaR">Ret. IVA %</label><input id="pIvaR" type="number" step="0.1" value="8"></div>
+      <div class="p"><label for="pIva">IVA incluido %</label><input id="pIva" type="number" step="0.1" value="16"></div>
+      <div class="p"><label for="pRnd">Redondeo $</label><input id="pRnd" type="number" step="1" value="5"></div>
+    </div>
+  </details>
+
+  <footer>
+    <code>flash = (objetivo + $6) ÷ (1 − SFP − comisión − 9.05%)</code><br>
+    Las tarifas se cobran sobre el precio flash. El descuento que pone TikTok Shop lo absorbe TikTok
+    y no toca tu liquidación. Verificado contra nueve liquidaciones reales, exacto al centavo.
+  </footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const IDS = ['objetivo','costo','desc','comm','pSfp','pCap','pItem','pIsr','pIvaR','pIva','pRnd'];
+
+const num = id => { const v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+const mx  = n => '$' + Math.round(n).toLocaleString('es-MX');
+const mx2 = n => '$' + n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = n => (n*100).toFixed(1) + '%';
+
+function render(){
+  const p = {
+    sfp: num('pSfp')/100, cap: num('pCap'), item: num('pItem'),
+    isr: num('pIsr')/100, ivaR: num('pIvaR')/100, iva: num('pIva')/100,
+    comm: num('comm')/100, desc: Math.min(num('desc'),90)/100, rnd: Math.max(1, num('pRnd')),
+  };
+  const T = num('objetivo');
+  const costo = num('costo');
+  const tr = (p.isr + p.ivaR) / (1 + p.iva);
+
+  /* despeje del precio flash, con el tope del SFP */
+  let exact = NaN;
+  const k1 = 1 - p.sfp - p.comm - tr;
+  if (k1 > 0){
+    exact = (T + p.item) / k1;
+    if (exact * p.sfp > p.cap){
+      const k2 = 1 - p.comm - tr;
+      exact = k2 > 0 ? (T + p.item + p.cap) / k2 : NaN;
+    }
+  }
+
+  const ok = T > 0 && isFinite(exact) && exact > 0;
+  if (!ok){
+    ['vFlash','vLista','vRoi'].forEach(i => $(i).textContent = '—');
+    ['sFlash','sLista','sRoi'].forEach(i => $(i).textContent = '');
+    $('tabla').innerHTML = '';
+    $('nota').innerHTML = T > 0
+      ? 'Con estos parámetros no hay precio que deje esa liquidación.'
+      : 'Escribe cuánto quieres recibir.';
+    return;
+  }
+
+  const F     = Math.ceil(exact / p.rnd) * p.rnd;
+  const L     = Math.round(F / (1 - p.desc) / p.rnd) * p.rnd;
+  const sfp   = Math.min(F * p.sfp, p.cap);
+  const cm    = F * p.comm;
+  const base  = F / (1 + p.iva);
+  const isr   = base * p.isr;
+  const ivaR  = base * p.ivaR;
+  const liq   = F - sfp - p.item - cm - isr - ivaR;
+  const util  = costo > 0 ? liq - costo : null;
+
+  $('vFlash').textContent = mx(F);
+  $('sFlash').textContent = 'exacto ' + mx2(exact);
+  $('vLista').textContent = mx(L);
+  $('sLista').textContent = L > 0 ? pct(1 - F/L) + ' de descuento' : '';
+  $('vRoi').innerHTML  = util === null ? '<span class="dim">—</span>'
+    : `<span class="${util >= 0 ? 'pos' : 'neg'}">${pct(util/costo)}</span>`;
+  $('sRoi').textContent = util === null ? 'captura tu costo' : 'utilidad ' + mx2(util);
+
+  const pc = v => `<span class="pct">${(v/F*100).toFixed(1)}%</span>`;
+  const rows = [
+    ['Precio lista', `<span class="dim">${mx(L)}</span>`, ''],
+    ['ind|Descuento de vendedor', `<span class="neg">−${mx2(L-F)}</span>`, ''],
+    ['Precio flash · base de las tarifas', `<b>${mx2(F)}</b>`, ''],
+    ['ind|Tarifa de servicio del SFP', `<span class="neg">−${mx2(sfp)}</span>${pc(sfp)}`, ''],
+    ['ind|Tarifa por artículo vendido', `<span class="neg">−${mx2(p.item)}</span>${pc(p.item)}`, ''],
+  ];
+  if (cm > 0) rows.push(['ind|Comisión de plataforma', `<span class="neg">−${mx2(cm)}</span>${pc(cm)}`, '']);
+  rows.push(
+    ['ind|Retención ISR', `<span class="neg">−${mx2(isr)}</span>${pc(isr)}`, ''],
+    ['ind|Retención IVA', `<span class="neg">−${mx2(ivaR)}</span>${pc(ivaR)}`, '']
+  );
+  if (costo > 0) rows.push(['ind|Mi costo del producto', `<span class="neg">−${mx2(costo)}</span>`, '']);
+
+  let html = rows.map(([k,v]) => {
+    const ind = k.startsWith('ind|');
+    return `<tr class="${ind?'ind':''}"><td>${ind?k.slice(4):k}</td><td>${v}</td></tr>`;
+  }).join('');
+  html += `<tr class="tot"><td>${costo>0?'Utilidad neta':'Importe total de la liquidación'}</td>
+           <td class="${(util ?? liq) >= 0 ? 'pos':'neg'}">${mx2(util ?? liq)}</td></tr>`;
+  $('tabla').innerHTML = html;
+
+  /* nota contextual */
+  const n = [];
+  const sobra = liq - T;
+  if (sobra >= 0.01) n.push(`Redondeando a ${mx(F)} te sobran <b>${mx2(sobra)}</b> sobre tu objetivo.`);
+  if (p.item / F > 0.05) n.push(`La tarifa fija de ${mx(p.item)} pesa <b>${pct(p.item/F)}</b> de esta venta — a este precio conviene armar paquetes.`);
+  if (sfp >= p.cap - 0.01) n.push(`El SFP ya llegó a su tope de ${mx(p.cap)}: de aquí en adelante subir el precio no cuesta más SFP.`);
+  if (p.comm === 0) n.push(`Con la comisión del 6% este mismo objetivo pediría <b>${mx(Math.ceil(((T+p.item)/(1-p.sfp-0.06-tr))/p.rnd)*p.rnd)}</b> de precio flash.`);
+  if (costo > 0 && liq < costo) n.push(`<b>La liquidación no cubre tu costo:</b> pierdes ${mx2(costo-liq)} por venta.`);
+  $('nota').innerHTML = n.join(' ');
+}
+
+IDS.forEach(id => $(id).addEventListener('input', render));
+render();
+$('objetivo').select();
+</script>
